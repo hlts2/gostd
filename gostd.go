@@ -6,7 +6,7 @@ import (
 	"unsafe"
 )
 
-// Gostd is gostd interface
+// Gostd is Gostd interface
 type Gostd interface {
 	ReadLine() string
 }
@@ -24,7 +24,8 @@ func NewGostd(reader io.Reader, readerSize int) Gostd {
 	}
 }
 
-// ReadLine returns line
+// ReadLine returns single-line
+// The text returned from ReadLine does not include the line end ("\r\n" or "\n")
 func (g *gostd) ReadLine() string {
 	buf := make([]byte, 0, g.readerSize)
 
