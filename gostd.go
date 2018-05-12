@@ -48,6 +48,5 @@ func (g *gostd) ReadLine() string {
 
 // ReadLineSplit split single-line into all substrings separated by sep
 func (g *gostd) ReadLineSplit(sep string) []string {
-	line := g.ReadLine()
-	return strings.Split(line, sep)
+	return strings.Split(g.ReadLine(), sep)
 }
