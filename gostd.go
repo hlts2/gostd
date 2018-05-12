@@ -3,12 +3,14 @@ package gostd
 import (
 	"bufio"
 	"io"
+	"strings"
 	"unsafe"
 )
 
 // Gostd is Gostd interface
 type Gostd interface {
 	ReadLine() string
+	ReadLineSplit(sep string) []string
 }
 
 type gostd struct {
@@ -42,4 +44,10 @@ func (g *gostd) ReadLine() string {
 	}
 
 	return *(*string)(unsafe.Pointer(&buf))
+}
+
+// ReadLineSplit split single-line into all substrings separated by sep
+func (g *gostd) ReadLineSplit(sep string) []string {
+	line := g.ReadLine()
+	return strings.Split(line, sep)
 }
