@@ -3,6 +3,7 @@ package gostd
 import (
 	"bufio"
 	"io"
+	"strconv"
 	"strings"
 	"unsafe"
 )
@@ -11,6 +12,7 @@ import (
 type Gostd interface {
 	ReadLine() string
 	ReadLineSplit(sep string) []string
+	ReadLineInt() int
 }
 
 type gostd struct {
@@ -49,4 +51,14 @@ func (g *gostd) ReadLine() string {
 // ReadLineSplit split single-line into all substrings separated by sep
 func (g *gostd) ReadLineSplit(sep string) []string {
 	return strings.Split(g.ReadLine(), sep)
+}
+
+// ReadLineInt reads lines as int type
+func (g *gostd) ReadLineInt() int {
+	n, err := strconv.Atoi(g.ReadLine())
+	if err != nil {
+		panic(err)
+	}
+
+	return n
 }

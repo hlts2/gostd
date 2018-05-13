@@ -88,3 +88,31 @@ func TestReadLineSplit(t *testing.T) {
 		}
 	}
 }
+
+func TestReadLineInt(t *testing.T) {
+	tests := []struct {
+		input    string
+		expected int
+	}{
+		{
+			input:    "1\n",
+			expected: 1,
+		},
+	}
+
+	for i, test := range tests {
+		stdin := bytes.NewBufferString(test.input)
+
+		gostd := NewGostd(stdin, MaxReaderSize)
+
+		if gostd == nil {
+			t.Error("NewGostd(io.Reader, size) gostd is error")
+		}
+
+		got := gostd.ReadLineInt()
+
+		if got != test.expected {
+			t.Errorf("i = %d ReadLineInt() expected: %d, got: %d", i, test.expected, got)
+		}
+	}
+}
