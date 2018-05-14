@@ -89,6 +89,36 @@ func TestReadLineSplit(t *testing.T) {
 	}
 }
 
+func TestReadLineIntSplit(t *testing.T) {
+	tests := []struct {
+		input    string
+		sep      string
+		expected []int
+	}{
+		{
+			input:    "1 2 3 4\n",
+			sep:      " ",
+			expected: []int{1, 2, 3, 4},
+		},
+	}
+
+	for i, test := range tests {
+		stdin := bytes.NewBufferString(test.input)
+
+		gostd := NewGostd(stdin, MaxReaderSize)
+
+		if gostd == nil {
+			t.Error("NewGostd(io.Reader, size) gostd is error")
+		}
+
+		got := gostd.ReadLineIntSplit(test.sep)
+
+		if !reflect.DeepEqual(got, test.expected) {
+			t.Errorf("i = %d ReadLineIntSplit(sep) expected: %v, got: %v", i, test.expected, got)
+		}
+	}
+}
+
 func TestReadLineInt(t *testing.T) {
 	tests := []struct {
 		input    string

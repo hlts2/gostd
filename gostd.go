@@ -12,6 +12,7 @@ import (
 type Gostd interface {
 	ReadLine() string
 	ReadLineSplit(sep string) []string
+	ReadLineIntSplit(sep string) []int
 	ReadLineInt() int
 	ReadLineFloat64() float64
 	ReadLineBool() bool
@@ -53,6 +54,21 @@ func (g *gostd) ReadLine() string {
 // ReadLineSplit split single-line into all substrings separated by sep
 func (g *gostd) ReadLineSplit(sep string) []string {
 	return strings.Split(g.ReadLine(), sep)
+}
+
+func (g *gostd) ReadLineIntSplit(sep string) []int {
+	splits := g.ReadLineSplit(sep)
+
+	nums := make([]int, 0, len(splits))
+
+	for _, val := range splits {
+		n, err := strconv.Atoi(val)
+		if err != nil {
+			panic(err)
+		}
+		nums = append(nums, n)
+	}
+	return nums
 }
 
 // ReadLineInt reads lines as int type
