@@ -116,3 +116,27 @@ func TestReadLineInt(t *testing.T) {
 		}
 	}
 }
+
+func TestReadLineFloat64(t *testing.T) {
+	tests := []struct {
+		input    string
+		expected float64
+	}{
+		{
+			input:    "11.1\n",
+			expected: 11.1,
+		},
+	}
+
+	for i, test := range tests {
+		stdin := bytes.NewBufferString(test.input)
+
+		gostd := NewGostd(stdin, MaxReaderSize)
+
+		got := gostd.ReadLineFloat64()
+
+		if got != test.expected {
+			t.Errorf("i = %d ReadLineFloat64() expected: %f, got: %f", i, test.expected, got)
+		}
+	}
+}
