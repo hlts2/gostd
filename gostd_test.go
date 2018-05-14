@@ -56,18 +56,27 @@ func TestReadLine(t *testing.T) {
 func TestReadLineSplit(t *testing.T) {
 	tests := []struct {
 		input    string
+		sep      string
 		expected []string
 	}{
 		{
 			input:    "hoge hoge\n",
+			sep:      " ",
 			expected: []string{"hoge", "hoge"},
 		},
 		{
-			input:    "hoge\nfoo\n",
-			expected: []string{"hoge"},
+			input:    "hoge,foo\n",
+			sep:      ",",
+			expected: []string{"hoge", "foo"},
+		},
+		{
+			input:    "hoge,foo\nvar",
+			sep:      ",",
+			expected: []string{"hoge", "foo"},
 		},
 		{
 			input:    "\n",
+			sep:      "",
 			expected: []string{},
 		},
 	}
@@ -81,9 +90,9 @@ func TestReadLineSplit(t *testing.T) {
 			t.Error("NewGostd(io.Reader, size) gostd is error")
 		}
 
-		got := gostd.ReadLine()
+		got := gostd.ReadLineSplit(test.sep)
 
-		if reflect.DeepEqual(got, test.expected) {
+		if !reflect.DeepEqual(got, test.expected) {
 			t.Errorf("i = %d ReadLine() expected: %s, got: %s", i, test.expected, got)
 		}
 	}
