@@ -14,6 +14,7 @@ type Gostd interface {
 	ReadLineSplit(sep string) []string
 	ReadLineInt() int
 	ReadLineFloat64() float64
+	ReadLineBool() bool
 }
 
 type gostd struct {
@@ -72,4 +73,14 @@ func (g *gostd) ReadLineFloat64() float64 {
 	}
 
 	return f
+}
+
+// ReadLineFloat64 reads lines as bool type
+func (g *gostd) ReadLineBool() bool {
+	b, err := strconv.ParseBool(g.ReadLine())
+	if err != nil {
+		panic(err)
+	}
+
+	return b
 }

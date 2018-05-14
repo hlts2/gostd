@@ -140,3 +140,31 @@ func TestReadLineFloat64(t *testing.T) {
 		}
 	}
 }
+
+func TestReadLineBool(t *testing.T) {
+	tests := []struct {
+		input    string
+		expected bool
+	}{
+		{
+			input:    "true\n",
+			expected: true,
+		},
+		{
+			input:    "false\n",
+			expected: false,
+		},
+	}
+
+	for i, test := range tests {
+		stdin := bytes.NewBufferString(test.input)
+
+		gostd := NewGostd(stdin, MaxReaderSize)
+
+		got := gostd.ReadLineBool()
+
+		if got != test.expected {
+			t.Errorf("i = %d ReadLineBool() expected: %v, got: %v", i, got, test.expected)
+		}
+	}
+}
