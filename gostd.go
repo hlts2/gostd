@@ -56,6 +56,7 @@ func (g *gostd) ReadLineSplit(sep string) []string {
 	return strings.Split(g.ReadLine(), sep)
 }
 
+// ReadLineIntSplit split single-line into all substrings separated by sep and convert the elements of the substring into int type
 func (g *gostd) ReadLineIntSplit(sep string) []int {
 	splits := g.ReadLineSplit(sep)
 
@@ -91,7 +92,7 @@ func (g *gostd) ReadLineFloat64() float64 {
 	return f
 }
 
-// ReadLineFloat64 reads lines as bool type
+// ReadLineBool reads lines as bool type
 func (g *gostd) ReadLineBool() bool {
 	b, err := strconv.ParseBool(g.ReadLine())
 	if err != nil {
